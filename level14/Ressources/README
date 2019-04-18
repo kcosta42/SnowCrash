@@ -1,17 +1,27 @@
-$> # For this level we will reverse the `getflag` binary
+# There are no executables to exploit, no files for us on the filesystem, we're only left with the getflag binary to reverse
+
 $> gdb getflag
-gdb> # We set 2 breakpoint in `main` and `getuid` functions
+
+# We set 2 breakpoints in `main` and `getuid` functions
+
 gdb> b main
 gdb> b getuid
 gdb> run
-gdb> # After the call to `ptrace` the register EAX is set to -1 because ptrace failed
-gdb> # We need to trick it by changing EAX to 0
+
+# After the call to `ptrace` the register EAX is set to -1 because ptrace failed (gdb supervises the execution of the program)
+# We need to trick it by changing EAX to 0
+
 gdb> p $eax=0
-gdb> # We continue the execution until `getuid` call
+
+# We continue the execution until `getuid` call
+
 gdb> continue
-gdb> # Then we just need to change the value of EAX (which correspond to UID)
-gdb> # From /etc/passwd we see that user flag14 correspond to 3014 (0xbc6)
-gdb> # So we change EAX to flag14 UID
+
+# Then we just need to change the value of EAX (which correspond to UID)
+# From /etc/passwd we see that user flag14 correspond to 3014 (0xbc6)
+# So we change EAX to flag14 UID
+
 gdb> p $eax=0xbc6
 gdb> finish
+
 Check flag.Here is your token : 7QiHafiNa3HVozsaXkawuYrTstxbpABHD8CPnHJ

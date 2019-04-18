@@ -1,0 +1,28 @@
+$> nm -u level13
+         w _Jv_RegisterClasses
+         w __gmon_start__
+         U __libc_start_main@@GLIBC_2.0
+         U exit@@GLIBC_2.0
+         U getuid@@GLIBC_2.0
+         U printf@@GLIBC_2.0
+         U strdup@@GLIBC_2.0
+$> strings level13
+...
+[^_]
+0123456
+UID %d started us but we we expect %d
+boe]!ai0FB@.:|L6l@A?>qJ}I
+your token is %s
+;*2$"$
+...
+$> ./level13
+UID 2013 started us but we we expect 4242
+$> # OK so we need to set UID=4242 to get our token
+$> # Let's see what gdb tells us
+$> gdb level13
+│0x8048595 <main+9>              call   0x8048380 <getuid@plt>                                                                                                                                                                                                                                                                                                          │
+│0x804859a <main+14>             cmp    $0x1092,%eax                                                                                                                                                                                                                                                                                                                    │
+│0x804859f <main+19>             je     0x80485cb <main+63>
+gdb> # If we set eax=0x1092 after the call to getuid we will jump straight to where our token is
+gdb> p $eax=0x1092
+your token is 2A31L79asukciNyi8uppkEuSx

@@ -1,15 +1,9 @@
+$> cat /etc/passwd
+[...]
+flag01:42hDRfypTqqnw:3001:3001::/home/flag/flag01:/bin/bash
+[...]
+
 $> john passwd
-Created directory: /home/vagrant/.john
-Using default input encoding: UTF-8
-Loaded 1 password hash (descrypt, traditional crypt(3) [DES 128/128 AVX-16])
-Will run 2 OpenMP threads
-Proceeding with single, rules:Wordlist
-Press 'q' or Ctrl-C to abort, almost any other key for status
-Almost done: Processing the remaining buffered candidate passwords, if any
-Warning: Only 130 candidates buffered for the current salt, minimum 256
-needed for performance.
-Proceeding with wordlist:/usr/share/john/password.lst, rules:Wordlist
+[...]
 abcdefg          (flag01)
-1g 0:00:00:00 DONE 2/3 (2019-04-15 09:40) 14.28g/s 126200p/s 126200c/s 126200C/s 123456..nutmegs
-Use the "--show" option to display all of the cracked passwords reliably
-Session completed
+[...]

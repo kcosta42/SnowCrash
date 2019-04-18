@@ -1,3 +1,10 @@
 $> find / -user flag00 2>/dev/null
 /usr/sbin/john
-$> # Caesar cipher +11 -> nottoohardhere
+
+$> cat /usr/sbin/john
+cdiiddwpgswtgt
+
+$> /dev/shm/caesar_cypher.py
+[...]
++11: nottoohardhere
+[...]

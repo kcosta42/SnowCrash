@@ -17,15 +17,6 @@ LOGNAME
 /bin/echo %s
 [...]
 
-# Try to rename the file level07 to change the output, nothing happened to change
-
-$> LOGNAME=$(getflag)
-
-$> ./level07
-[parentheses error]
-
-# Something to dig here with parentheses to escape
-
 $> LOGNAME=$\(getflag\)
 
 $> ./level07

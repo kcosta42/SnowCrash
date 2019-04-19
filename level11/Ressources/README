@@ -1,6 +1,6 @@
 # The program waits for a connection on 127.0.0.1:5151
 # It will then prompt for a Password and pass anything we write in a hash function
-# As we can see the hash function will execute the prompted command in `io.popen` to generate the hash
+# The hash function will execute the prompted command in `io.popen` to generate the hash
 # We just need it to add whatever we want to execute in popen (code injection)
 
 $> nc 127.0.0.1 5151

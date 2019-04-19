@@ -1,4 +1,4 @@
-# As we can see the program uses backticks to evaluate a shellscript
+# The program uses backticks to evaluate a shellscript
 # We can exploit that by making it evaluate our script contained in the $xx variable
 # The regex will capitalize the x argument and delete anything after a space
 # we can't directly write x="`getflag>/tmp/token`" which would be translated as x="`GETFLAG>/TMP/TOKEN`" (as Linux is case-sensitive)
